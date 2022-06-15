@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar, FlatList, SafeAreaView, Dimensions, StyleSheet, Text, View } from 'react-native';
+import { StatusBar, FlatList, SafeAreaView, Dimensions, StyleSheet, Text, View, Alert, Button } from 'react-native';
 import { Height } from './src/height';
 import ModalType from './src/modalType';
 import ModalCol from './src/modalColor';
@@ -16,6 +16,7 @@ import { Block } from './src/block';
 import ScrollV from './src/scrollView';
 import { ToDo } from './src/todo';
 import { render } from 'react-dom';
+import { ModalSpisok } from './src/modalSpisok';
 
 const Item = ({ title, price, montazh, num, id, delet }) => (
   <View style={[styles.item, styles.block]}>
@@ -62,7 +63,8 @@ export default function App() {
   const [kolvoSetki, setKolvoSetki] = useState('1')
   const [todos, setTodos] = useState([])
   const [todoss, setTodoss] = useState([])
-
+  const [td, setTd] = useState('')
+  const [tdalert, setTdalert] = useState('')
 
   const handleChangeWidth = (value) => {
     setWidthSetki(value)
@@ -150,38 +152,62 @@ export default function App() {
     setTodos([...todos.filter((todo) => todo.id !== id)])
   }
 
-  const seEffe = () => {
+  useEffect (() => {
     let punkt
     todoss.splice(0, todoss.length,)
     setTodoss(todoss)
     const obj = Object.values([...todos])
     obj.forEach((t, i, v) => {
       let b = obj[i].task
-      punkt = i + 1 + '. ' + b + '\r\n'
+      punkt = i + 1 + '. ' + b + ', ' + obj[i].kolvoSetki + 'шт.' + '\r\n'
       todoss.push(punkt)
     })
-    alert(todoss)
-    console.log(todos)
-  }
+    let textSpiska = todoss.join('')
+    setTdalert(textSpiska)
+    },)
+    
+  
 
-  const Vsego = () => {
+    const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Список москитных сеток",
+      tdalert,
+      [
+        {
+          text: "Cancel",
+          //onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          //onPress: () => setstr()
+        }
+      ]
+    );
 
-    let s = (Math.ceil(widthSetki * heightSetki / 1000000) >= 1) ? Math.ceil(widthSetki * heightSetki / 1000000) : 1
-    let stoimostMkv = +typeSetki + +typeMSetki + +profilSetki
-    let setka = s * stoimostMkv
-    setRaschesSetki(setka)
+  const Vsego = (props) => {
+    let { d } = props
+    useEffect(() => {
 
-    const obj = Object.values([...todos])
-    let b
-    let c = 0
-    obj.forEach((t, i, v) => {
-      b = (+obj[i].raschesSetki + +obj[i].montazhSetki) * +obj[i].kolvoSetki
-      c = c + b
-    })
-    let d = c + +zamerSetki + +dostavkaSetki
+      let s = (Math.ceil(widthSetki * heightSetki / 1000000) >= 1) ? Math.ceil(widthSetki * heightSetki / 1000000) : 1
+      let stoimostMkv = +typeSetki + +typeMSetki + +profilSetki
+      let setka = s * stoimostMkv
+      setRaschesSetki(setka)
+
+      const obj = Object.values([...todos])
+      let b
+      let c = 0
+      obj.forEach((t, i, v) => {
+        b = (+obj[i].raschesSetki + +obj[i].montazhSetki) * +obj[i].kolvoSetki
+        c = c + b
+      })
+      d = c + +zamerSetki + +dostavkaSetki
+      setTd(d)
+    }, [d])
+
     return (
       <View>
-        <Text style={styles.input}>Итого: {d}₽</Text>
+        <Text style={styles.input}>Итого: {td}₽</Text>
       </View>
     )
   }
@@ -277,7 +303,8 @@ export default function App() {
       </ScrollV> */}
       <View>
 
-        <ButtonP onPress={seEffe}>Список</ButtonP>
+        <ButtonP onPress={createTwoButtonAlert}>Список</ButtonP>
+        <ModalSpisok tdalert={tdalert} />
 
         <SafeAreaView style={styles.containerList}>
           <FlatList
@@ -296,7 +323,7 @@ export default function App() {
 
 const dimensions = Dimensions.get('window');
 const imageWidth = dimensions.width;
-const imageHeight = dimensions.height - 300;
+const imageHeight = dimensions.height - 325;
 
 const styles = StyleSheet.create({
   container: {
@@ -304,7 +331,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 35,
+    //marginTop: 35,
     paddingTop: 10,
   },
   block: {
