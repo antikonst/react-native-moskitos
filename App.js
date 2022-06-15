@@ -17,9 +17,13 @@ import ScrollV from './src/scrollView';
 import { ToDo } from './src/todo';
 import { render } from 'react-dom';
 
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
+const Item = ({ title, price, montazh, num, id, delet }) => (
+  <View style={[styles.item, styles.block]}>
+    <Text style={styles.titlet}>{title}</Text>
+    <Text style={styles.title}> {price}₽ </Text>
+    <Text style={styles.title}> {montazh}₽ </Text>
+    <Text style={styles.title}> {num}шт </Text>
+    <ButtonP onPress={() => delet(id)}>x</ButtonP>
   </View>
 );
 
@@ -27,9 +31,19 @@ const Item = ({ title }) => (
 
 export default function App() {
 
+
   const renderItem = ({ item }) => (
-    <Item title={item.task} />
+    <Item
+      title={item.task}
+      price={item.raschesSetki}
+      montazh={item.montazhSetki}
+      num={item.kolvoSetki}
+      id={item.id}
+      delet={delet}
+    />
   );
+
+
 
   const [widthSetki, setWidthSetki] = useState('')
   const [heightSetki, setHeightSetki] = useState('')
@@ -86,9 +100,9 @@ export default function App() {
     setRaschetSetki(value)
   }
 
-  const handleChangeRasches = (value) => {
+  /* const handleChangeRasches = (value) => {
     setRaschesSetki(value)
-  }
+  } */
 
   const handleChangeMontazh = (value) => {
     setMontazhSetki(value)
@@ -124,6 +138,9 @@ export default function App() {
         id: Date.now().toString(),
         task: text,
         complete: false,
+        kolvoSetki: kolvoSetki,
+        raschesSetki: raschesSetki,
+        montazhSetki: montazhSetki
       }
       setTodos([...todos, newItem])
     }
@@ -145,6 +162,28 @@ export default function App() {
     })
     alert(todoss)
     console.log(todos)
+  }
+
+  const Vsego = () => {
+
+    let s = (Math.ceil(widthSetki * heightSetki / 1000000) >= 1) ? Math.ceil(widthSetki * heightSetki / 1000000) : 1
+    let stoimostMkv = +typeSetki + +typeMSetki + +profilSetki
+    let setka = s * stoimostMkv
+    setRaschesSetki(setka)
+
+    const obj = Object.values([...todos])
+    let b
+    let c = 0
+    obj.forEach((t, i, v) => {
+      b = (+obj[i].raschesSetki + +obj[i].montazhSetki) * +obj[i].kolvoSetki
+      c = c + b
+    })
+    let d = c + +zamerSetki + +dostavkaSetki
+    return (
+      <View>
+        <Text style={styles.input}>Итого: {d}₽</Text>
+      </View>
+    )
   }
 
   return (
@@ -169,17 +208,17 @@ export default function App() {
           <Zamer onChange={handleChangeZamer} />
           <Dostavka onChange={handleChangeDostavka} />
         </View>
-        <View>
+        {/* <View>
           <Text>ш{widthSetki}*в{heightSetki}, {typenSetki} {colorSetki} {prSetki} {nameSetki} {kolvoSetki}шт;</Text>
-        </View>
-        <View>
+        </View> */}
+        {/* <View>
           <Text>Сетка: {raschesSetki}₽; Монтаж: {montazhSetki}₽</Text>
-        </View>
-        <View>
-          <Text>Замер: {zamerSetki}₽; Доставка: {dostavkaSetki}₽</Text>
-        </View>
+        </View> */}
+        {/* <View>
+          <Text style={styles.input}>Замер: {zamerSetki}₽; Доставка: {dostavkaSetki}₽</Text>
+        </View> */}
         <View style={styles.block}>
-          <Calc
+          {/* <Calc
             onRaschet={handleChangeRaschet}
             widthSetki={widthSetki}
             heightSetki={heightSetki}
@@ -195,7 +234,7 @@ export default function App() {
             kolvoSetki={kolvoSetki}
             raschesSetki={raschesSetki}
             onSetka={handleChangeRasches}
-          />
+          /> */}
 
           <Block
             addTask={addTask}
@@ -214,11 +253,14 @@ export default function App() {
             kolvoSetki={kolvoSetki}
             raschesSetki={raschesSetki}
           />
+
+          <Vsego />
+
         </View>
 
 
       </View>
-      <ScrollV>
+      {/* <ScrollV>
         {
           todos.map((todo) => {
             return (
@@ -232,13 +274,14 @@ export default function App() {
             )
           })
         }
-      </ScrollV>
+      </ScrollV> */}
       <View>
 
         <ButtonP onPress={seEffe}>Список</ButtonP>
 
         <SafeAreaView style={styles.containerList}>
           <FlatList
+            style={styles.maxW}
             data={todos}
             renderItem={renderItem}
             keyExtractor={item => item.id}
@@ -253,6 +296,7 @@ export default function App() {
 
 const dimensions = Dimensions.get('window');
 const imageWidth = dimensions.width;
+const imageHeight = dimensions.height - 300;
 
 const styles = StyleSheet.create({
   container: {
@@ -287,7 +331,10 @@ const styles = StyleSheet.create({
   },
   containerList: {
     backgroundColor: '#eee',
-    height: 200
+    height: imageHeight,
+  },
+  maxW: {
+    maxWidth: imageWidth,
   },
   item: {
     backgroundColor: 'white',
@@ -297,5 +344,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
+  },
+  titlet: {
+    fontSize: 14,
+    flex: 1
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 5,
+    fontSize: 20,
+    textAlign: 'center',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingHorizontal: 20,
   },
 });

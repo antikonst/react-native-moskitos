@@ -14,7 +14,6 @@ export const Calc = ({ onSetka, widthSetki, heightSetki, typeSetki, onRaschet, m
     setItogo(itogo);
     onRaschet(itogo);
     onSetka(setka);
-
   });
 
   return (

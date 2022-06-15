@@ -5,7 +5,7 @@ import ButtonP from './buttonP';
 
 export const Block = ({ addTask, widthSetki, heightSetki, typenSetki, colorSetki, prSetki, nameSetki, kolvoSetki, raschesSetki, montazhSetki }) => {
 
-  let txt = 'МС ш' + widthSetki + '*в' + heightSetki  + ', ' +  typenSetki + ', ' + colorSetki + ', ' + prSetki + ', ' + nameSetki + ', ' + kolvoSetki + 'шт; Сетка: ' + raschesSetki + '₽; Монтаж: ' + montazhSetki + '₽;'
+  let txt = 'МС ш' + widthSetki + '*в' + heightSetki  + ', ' +  typenSetki + ', ' + colorSetki + ', ' + prSetki + ', ' + nameSetki // + ', ' + kolvoSetki + 'шт; Сетка: ' + raschesSetki + '₽; Монтаж: ' + montazhSetki + '₽;'
 
   const [text, setText] = useState('')
 
