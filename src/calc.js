@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View, StyleSheet } from "react-native"
 import { useState, useEffect } from 'react';
 
-export const Calc = ({ onSetka, widthSetki, heightSetki, typeSetki, onRaschet, montazhSetki, typeMSetki, profilSetki, zamertSetki, dostavkaSetki, kolvoSetki }) => {
+export const Calc = ({ style, onSetka, widthSetki, heightSetki, typeSetki, onRaschet, montazhSetki, typeMSetki, profilSetki, zamertSetki, dostavkaSetki, kolvoSetki }) => {
 
   let [itogo, setItogo] = useState('0');
 
@@ -17,7 +17,7 @@ export const Calc = ({ onSetka, widthSetki, heightSetki, typeSetki, onRaschet, m
   });
 
   return (
-    <View style={styles.block}>
+    <View style={[styles.block, style]}>
       <Text style={styles.input} >Итого: {itogo}₽</Text>
     </View>
   )

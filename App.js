@@ -152,7 +152,7 @@ export default function App() {
     setTodos([...todos.filter((todo) => todo.id !== id)])
   }
 
-  useEffect (() => {
+  useEffect(() => {
     let punkt
     todoss.splice(0, todoss.length,)
     setTodoss(todoss)
@@ -164,26 +164,26 @@ export default function App() {
     })
     let textSpiska = todoss.join('')
     setTdalert(textSpiska)
-    },)
-    
-  
+  })
 
-    const createTwoButtonAlert = () =>
-    Alert.alert(
-      "Список москитных сеток",
-      tdalert,
-      [
-        {
-          text: "Cancel",
-          //onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        {
-          text: "OK",
-          //onPress: () => setstr()
-        }
-      ]
-    );
+
+
+  /* const createTwoButtonAlert = () =>
+  Alert.alert(
+    "Список москитных сеток",
+    tdalert,
+    [
+      {
+        text: "Cancel",
+        //onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      {
+        text: "OK",
+        //onPress: () => setstr()
+      }
+    ]
+  ); */
 
   const Vsego = (props) => {
     let { d } = props
@@ -206,11 +206,13 @@ export default function App() {
     }, [d])
 
     return (
-      <View>
+      <View style={vid}>
         <Text style={styles.input}>Итого: {td}₽</Text>
       </View>
     )
   }
+
+let vid = (tdalert == '') ? styles.nevidim : ''
 
   return (
     <View>
@@ -278,10 +280,11 @@ export default function App() {
             nameSetki={nameSetki}
             kolvoSetki={kolvoSetki}
             raschesSetki={raschesSetki}
+            style={vid}
           />
 
           <Vsego />
-
+          <ModalSpisok tdalert={tdalert} style={vid}/>
         </View>
 
 
@@ -303,8 +306,8 @@ export default function App() {
       </ScrollV> */}
       <View>
 
-        <ButtonP onPress={createTwoButtonAlert}>Список</ButtonP>
-        <ModalSpisok tdalert={tdalert} />
+        {/* <ButtonP onPress={createTwoButtonAlert}>Список</ButtonP> */}
+
 
         <SafeAreaView style={styles.containerList}>
           <FlatList
@@ -387,4 +390,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 20,
   },
+  vidim: {
+    display: 'block'
+  },
+  nevidim: {
+    display: 'none'
+  }
 });

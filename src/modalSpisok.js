@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Share, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import * as Clipboard from 'expo-clipboard';
 
-export const ModalSpisok = ({ tdalert }) => {
+export const ModalSpisok = ({ tdalert, style }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [setka, setSetka] = useState('')
   useEffect (() => {
@@ -33,7 +33,7 @@ export const ModalSpisok = ({ tdalert }) => {
     };
 
   return (
-    <View style={styles.centeredView}>
+    <View style={[styles.centeredView, style]}>
       <Modal
         animationType="fade"
         transparent={false}
@@ -73,7 +73,7 @@ export const ModalSpisok = ({ tdalert }) => {
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.textStyle}>Список сеток</Text>
+        <Text style={styles.textStyle}>Список</Text>
       </Pressable>
     </View>
   );
