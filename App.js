@@ -189,7 +189,7 @@ export default function App() {
     let { d } = props
     useEffect(() => {
 
-      let s = (Math.ceil(widthSetki * heightSetki / 1000000) >= 1) ? Math.ceil(widthSetki * heightSetki / 1000000) : 1
+      let s = (Math.ceil(widthSetki * heightSetki / 10000)/100 >= 1) ? Math.ceil(widthSetki * heightSetki / 10000)/100 : 1
       let stoimostMkv = +typeSetki + +typeMSetki + +profilSetki
       let setka = s * stoimostMkv
       setRaschesSetki(setka)
