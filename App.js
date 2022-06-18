@@ -19,6 +19,7 @@ import { render } from 'react-dom';
 import { ModalSpisok } from './src/modalSpisok';
 import { Eas } from './src/easing';
 import { Anim } from './src/animate';
+import { convert as convertNumberToWordsRu } from 'number-to-words-ru'
 
 const Item = ({ title, price, montazh, num, id, delet }) => (
   <View style={[styles.item, styles.block]}>
@@ -216,6 +217,10 @@ export default function App() {
 
   let vid = (tdalert == '') ? styles.nevidim : ''
 
+
+  //let rub = new MoneyInWords(td)
+  //let rubwords = rub.inwords(td)
+
   return (
     <View>
       <View style={styles.container}>
@@ -290,6 +295,7 @@ export default function App() {
           <Anim tdalert={tdalert} obj={<ModalSpisok tdalert={tdalert} style={vid} />}></Anim>
 
         </View>
+        <Anim tdalert={tdalert} obj={<Text>{convertNumberToWordsRu(td)}</Text>}></Anim>
 
       </View>
       {/* <ScrollV>
