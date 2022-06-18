@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-const ButtonP = ({onPress, children, stl}) => {
+const ButtonP = ({onPress, children, stl, stt}) => {
   
   return (
       <Pressable
-        style={[styles.button, {stl}]}
+        style={[styles.button, stl]}
         onPress={onPress}
       >
-        <Text style={styles.textStyle}>{children}</Text>
+        <Text style={[styles.textStyle, stt]}>{children}</Text>
       </Pressable>
   );
 };

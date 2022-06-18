@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar, FlatList, SafeAreaView, Dimensions, StyleSheet, Text, View, Alert, Button } from 'react-native';
+import { Animated, Easing, StatusBar, FlatList, SafeAreaView, Dimensions, StyleSheet, Text, View, Alert, Button } from 'react-native';
 import { Height } from './src/height';
 import ModalType from './src/modalType';
 import ModalCol from './src/modalColor';
@@ -17,6 +17,8 @@ import ScrollV from './src/scrollView';
 import { ToDo } from './src/todo';
 import { render } from 'react-dom';
 import { ModalSpisok } from './src/modalSpisok';
+import { Eas } from './src/easing';
+import { Anim } from './src/animate';
 
 const Item = ({ title, price, montazh, num, id, delet }) => (
   <View style={[styles.item, styles.block]}>
@@ -24,7 +26,7 @@ const Item = ({ title, price, montazh, num, id, delet }) => (
     <Text style={styles.title}> {price}₽ </Text>
     <Text style={styles.title}> {montazh}₽ </Text>
     <Text style={styles.title}> {num}шт </Text>
-    <ButtonP onPress={() => delet(id)}>x</ButtonP>
+    <ButtonP onPress={() => delet(id)} stl={styles.tex}><Text>x</Text></ButtonP>
   </View>
 );
 
@@ -189,7 +191,7 @@ export default function App() {
     let { d } = props
     useEffect(() => {
 
-      let s = (Math.ceil(widthSetki * heightSetki / 10000)/100 >= 1) ? Math.ceil(widthSetki * heightSetki / 10000)/100 : 1
+      let s = (Math.ceil(widthSetki * heightSetki / 10000) / 100 >= 1) ? Math.ceil(widthSetki * heightSetki / 10000) / 100 : 1
       let stoimostMkv = +typeSetki + +typeMSetki + +profilSetki
       let setka = s * stoimostMkv
       setRaschesSetki(setka)
@@ -212,7 +214,7 @@ export default function App() {
     )
   }
 
-let vid = (tdalert == '') ? styles.nevidim : ''
+  let vid = (tdalert == '') ? styles.nevidim : ''
 
   return (
     <View>
@@ -280,13 +282,14 @@ let vid = (tdalert == '') ? styles.nevidim : ''
             nameSetki={nameSetki}
             kolvoSetki={kolvoSetki}
             raschesSetki={raschesSetki}
-            style={vid}
+          //style={vid}
           />
 
-          <Vsego />
-          <ModalSpisok tdalert={tdalert} style={vid}/>
-        </View>
 
+          <Anim tdalert={tdalert} obj={<Vsego />}></Anim>
+          <Anim tdalert={tdalert} obj={<ModalSpisok tdalert={tdalert} style={vid} />}></Anim>
+
+        </View>
 
       </View>
       {/* <ScrollV>
@@ -395,5 +398,9 @@ const styles = StyleSheet.create({
   },
   nevidim: {
     display: 'none'
+  },
+  tex: {
+    paddingTop: 5,
+    paddingBottom: 8
   }
 });
