@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Animated, Easing, StatusBar, FlatList, SafeAreaView, Dimensions, StyleSheet, Text, View, Alert, Button } from 'react-native';
+import { FlatList, SafeAreaView, Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Height } from './src/height';
 import ModalType from './src/modalType';
 import ModalCol from './src/modalColor';
 import { Width } from './src/width';
 import ModalProfil from './src/profil';
-import { Calc } from './src/calc';
 import { Montazh } from './src/montazh';
 import TypeM from './src/typeM';
 import { Zamer } from './src/zamer';
@@ -13,13 +12,10 @@ import { Dostavka } from './src/dostavka';
 import { Kolvo } from './src/kolvo';
 import ButtonP from './src/buttonP'
 import { Block } from './src/block';
-import ScrollV from './src/scrollView';
-import { ToDo } from './src/todo';
-import { render } from 'react-dom';
 import { ModalSpisok } from './src/modalSpisok';
-import { Eas } from './src/easing';
 import { Anim } from './src/animate';
 import { convert as convertNumberToWordsRu } from 'number-to-words-ru'
+import RNPrint from 'react-native-print';
 
 const Item = ({ title, price, montazh, num, id, delet }) => (
   <View style={[styles.item, styles.block]}>
@@ -217,9 +213,11 @@ export default function App() {
 
   let vid = (tdalert == '') ? styles.nevidim : ''
 
-
-  //let rub = new MoneyInWords(td)
-  //let rubwords = rub.inwords(td)
+  var htmlString = `<div> (HTML contents here) </div>`;
+  RNPrint.print({html: htmlString})
+  
+  
+  //ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
 
   return (
     <View>
@@ -408,5 +406,6 @@ const styles = StyleSheet.create({
   tex: {
     paddingTop: 5,
     paddingBottom: 8
-  }
+  },
+  
 });
