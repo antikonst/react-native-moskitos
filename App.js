@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, Dimensions, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, Dimensions, StyleSheet, Text, View, Button, Platform, StatusBar } from 'react-native';
 import { Height } from './src/height';
 import ModalType from './src/modalType';
 import ModalCol from './src/modalColor';
@@ -15,7 +15,7 @@ import { Block } from './src/block';
 import { ModalSpisok } from './src/modalSpisok';
 import { Anim } from './src/animate';
 import { convert as convertNumberToWordsRu } from 'number-to-words-ru'
-import RNPrint from 'react-native-print';
+import { Dogovor } from './src/dogovor';
 
 const Item = ({ title, price, montazh, num, id, delet }) => (
   <View style={[styles.item, styles.block]}>
@@ -26,7 +26,6 @@ const Item = ({ title, price, montazh, num, id, delet }) => (
     <ButtonP onPress={() => delet(id)} stl={styles.tex}><Text>x</Text></ButtonP>
   </View>
 );
-
 
 
 export default function App() {
@@ -166,24 +165,6 @@ export default function App() {
   })
 
 
-
-  /* const createTwoButtonAlert = () =>
-  Alert.alert(
-    "Список москитных сеток",
-    tdalert,
-    [
-      {
-        text: "Cancel",
-        //onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
-      {
-        text: "OK",
-        //onPress: () => setstr()
-      }
-    ]
-  ); */
-
   const Vsego = (props) => {
     let { d } = props
     useEffect(() => {
@@ -213,12 +194,6 @@ export default function App() {
 
   let vid = (tdalert == '') ? styles.nevidim : ''
 
-  var htmlString = `<div> (HTML contents here) </div>`;
-  RNPrint.print({html: htmlString})
-  
-  
-  //ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
-
   return (
     <View>
       <View style={styles.container}>
@@ -241,33 +216,7 @@ export default function App() {
           <Zamer onChange={handleChangeZamer} />
           <Dostavka onChange={handleChangeDostavka} />
         </View>
-        {/* <View>
-          <Text>ш{widthSetki}*в{heightSetki}, {typenSetki} {colorSetki} {prSetki} {nameSetki} {kolvoSetki}шт;</Text>
-        </View> */}
-        {/* <View>
-          <Text>Сетка: {raschesSetki}₽; Монтаж: {montazhSetki}₽</Text>
-        </View> */}
-        {/* <View>
-          <Text style={styles.input}>Замер: {zamerSetki}₽; Доставка: {dostavkaSetki}₽</Text>
-        </View> */}
         <View style={styles.block}>
-          {/* <Calc
-            onRaschet={handleChangeRaschet}
-            widthSetki={widthSetki}
-            heightSetki={heightSetki}
-            typeSetki={typeSetki}
-            colorSetki={colorSetki}
-            prSetki={prSetki}
-            profilSetki={profilSetki}
-            montazhSetki={montazhSetki}
-            typeMSetki={typeMSetki}
-            zamertSetki={zamerSetki}
-            dostavkaSetki={dostavkaSetki}
-            nameSetki={nameSetki}
-            kolvoSetki={kolvoSetki}
-            raschesSetki={raschesSetki}
-            onSetka={handleChangeRasches}
-          /> */}
 
           <Block
             addTask={addTask}
@@ -285,7 +234,6 @@ export default function App() {
             nameSetki={nameSetki}
             kolvoSetki={kolvoSetki}
             raschesSetki={raschesSetki}
-          //style={vid}
           />
 
 
@@ -295,26 +243,12 @@ export default function App() {
         </View>
         <Anim tdalert={tdalert} obj={<Text>{convertNumberToWordsRu(td)}</Text>}></Anim>
 
+        <View style={styles.container}>
+        </View>
+
       </View>
-      {/* <ScrollV>
-        {
-          todos.map((todo) => {
-            return (
-              <View key={todo.id} style={[styles.block, styles.wid100]}>
-                <Text
-                  style={styles.widcenter}>
-                  {todo.task}
-                </Text>
-                <ButtonP stl={styles.btn} onPress={() => delet(todo.id)}>x</ButtonP>
-              </View>
-            )
-          })
-        }
-      </ScrollV> */}
+
       <View>
-
-        {/* <ButtonP onPress={createTwoButtonAlert}>Список</ButtonP> */}
-
 
         <SafeAreaView style={styles.containerList}>
           <FlatList
@@ -407,5 +341,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 8
   },
-  
+statusbar: {
+  backgroundColor: "#2166F3"
+}
 });

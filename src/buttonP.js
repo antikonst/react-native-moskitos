@@ -15,11 +15,12 @@ const ButtonP = ({onPress, children, stl, stt}) => {
 
 const styles = StyleSheet.create({
   button: {
-    paddingBottom: 5,
+    padding: 10,
     borderRadius: 20,
     paddingHorizontal: 17,
     elevation: 2,
     backgroundColor: "#2166F3",
+    marginHorizontal: 5
   },
   textStyle: {
     color: "white",

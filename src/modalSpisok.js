@@ -2,6 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Share, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import * as Clipboard from 'expo-clipboard';
 import { Anim } from "./animate";
+import PrintExpo from "./print";
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
+import { Otpr } from "./otpr";
+import { Asset } from 'expo-asset';
+import { printAsync } from 'expo-print';
+import { manipulateAsync } from 'expo-image-manipulator';
+import { Dogovor } from "./dogovor";
 
 export const ModalSpisok = ({ tdalert, style }) => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -37,9 +45,44 @@ export const ModalSpisok = ({ tdalert, style }) => {
 
   const td = () => {
     setSost('1')
-    const y = () => {setSost('')}
+    const y = () => { setSost('') }
     setTimeout(y, 2000)
   }
+
+  /* const file = FileSystem.documentDirectory + 'pko1510_1.pdf'
+  const shareSpisok = async () => {
+    try {
+      await Sharing.shareAsync(file, {mimeType: 'image/jpeg'})
+    } catch (error) {
+      alert(error.message);
+    }
+  } */
+
+  const pechat = <Otpr />
+  const html64 = `<html><img src="data:image/png;base64,${pechat.type}" style="width: 20vw;" /></html>`
+
+  /* async function generateHTML() {
+    const asset = Asset.fromModule(require('../assets/pechat_tr.png'));
+
+    const image = await manipulateAsync(
+      asset.localUri ?? asset.uri,
+      [],
+      { base64: true }
+    );
+    return `
+      <html>
+        <img
+          src="data:image/jpeg;base64,${image.base64}"
+          style="width: 20vw;" />
+      </html>
+    `;
+  } */
+
+  async function print() {
+    const html = await generateHTML();
+    await printAsync({ html });
+  }
+
 
   return (
     <View style={[styles.centeredView, style]}>
@@ -70,12 +113,26 @@ export const ModalSpisok = ({ tdalert, style }) => {
               >
                 <Text style={styles.textStyle}>Send</Text>
               </Pressable>
+
+              <PrintExpo html={html64} txt={'Print'}/>
+
+              {/* <Pressable
+                style={[styles.button, styles.buttonOpen]}
+                onPress={print}
+              >
+                <Text style={styles.textStyle}>Print</Text>
+              </Pressable> */}
+
               <Pressable
-                style={[styles.button, styles.buttonOpen ]}
+                style={[styles.button, styles.buttonOpen]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
                 <Text style={styles.textStyle}>X</Text>
               </Pressable>
+
+            </View>
+            <View>
+              <Dogovor />
             </View>
           </View>
         </View>
@@ -113,7 +170,7 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   button: {
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     borderRadius: 20,
     padding: 10,
     elevation: 2
@@ -149,8 +206,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     //marginEnd: 15
+
   },
   tex: {
     paddingVertical: 10,
   }
 });
+
