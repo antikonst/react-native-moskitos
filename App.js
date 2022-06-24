@@ -196,6 +196,9 @@ export default function App() {
 
   return (
     <View>
+      <StatusBar
+        backgroundColor="#2166F3"
+        />
       <View style={styles.container}>
 
         <View style={styles.block}>
