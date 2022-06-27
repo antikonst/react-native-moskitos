@@ -44,8 +44,8 @@ export default function App() {
 
 
 
-  const [widthSetki, setWidthSetki] = useState('')
-  const [heightSetki, setHeightSetki] = useState('')
+  const [widthSetki, setWidthSetki] = useState('600')
+  const [heightSetki, setHeightSetki] = useState('1200')
   const [typeSetki, setTypeSetki] = useState('1500')
   const [typenSetki, setTypenSetki] = useState('стандарт')
   const [colorSetki, setColorSetki] = useState('белый')
@@ -241,7 +241,7 @@ export default function App() {
 
 
           <Anim tdalert={tdalert} obj={<Vsego />}></Anim>
-          <Anim tdalert={tdalert} obj={<ModalSpisok tdalert={tdalert} style={vid} />}></Anim>
+          <Anim tdalert={tdalert} obj={<ModalSpisok tdalert={tdalert} style={vid} tdi={td}/>}></Anim>
 
         </View>
         <Anim tdalert={tdalert} obj={<Text>{convertNumberToWordsRu(td)}</Text>}></Anim>

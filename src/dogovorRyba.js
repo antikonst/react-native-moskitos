@@ -89,8 +89,8 @@ export const DogovorRyba =
 </table>\
 <table border="0" width="100%">\
 <tr><td width="50%">\
-podpis\
 pechat\
+podpis\
 </td></tr></table>\
 \
 <table border="0" width="100%">\

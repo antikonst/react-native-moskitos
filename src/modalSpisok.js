@@ -11,7 +11,7 @@ import { printAsync } from 'expo-print';
 import { manipulateAsync } from 'expo-image-manipulator';
 import { Dogovor } from "./dogovor";
 
-export const ModalSpisok = ({ tdalert, style }) => {
+export const ModalSpisok = ({ tdalert, style, tdi }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [setka, setSetka] = useState('')
   useEffect(() => {
@@ -132,7 +132,7 @@ export const ModalSpisok = ({ tdalert, style }) => {
 
             </View>
             <View>
-              <Dogovor />
+              <Dogovor td={tdi} />
             </View>
           </View>
         </View>

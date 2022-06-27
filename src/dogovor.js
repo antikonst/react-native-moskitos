@@ -1,19 +1,27 @@
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, Button, Platform, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 import ButtonP from './buttonP'
 import { DogovorRyba } from './dogovorRyba';
 import PrintExpo from './print';
+import { convert as convertNumberToWordsRu } from 'number-to-words-ru'
+import { Otpr } from './otpr';
+import { Podpis } from './podpis';
 
-export const Dogovor = () => {
+export const Dogovor = ({ td }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [fio, setFio] = useState('');
-  const [adres, setAdres] = useState('');
-  const [tel, setTel] = useState('');
+  const [fio, setFio] = useState('_____________________________________________');
+  const [adres, setAdres] = useState(' ');
+  const [tel, setTel] = useState(' ');
   const [dannye, setDan] = useState(' ');
-  const [fini, setFini] = useState(' ');
-
+  const [fini, setFini] = useState('_______________________');
+  const [pred, setPred] = useState('0');
+  const [sum, setSum] = useState('');
+  const [srok, setSrok] = useState('10-ти');
+  useEffect(() => {
+    setSum(td)
+  })
 
   const onChangeFio = (text) => {
     setFio(text);
@@ -27,18 +35,33 @@ export const Dogovor = () => {
   const onChangeDan = (text) => {
     setDan(text);
   }
-
-//let dateN = new Date()
-let date = moment().format('L').replace(/\//g, '.') + 'г.'
-let nomer = moment().format("DMM") + '_' + moment().format("HHmm")
-const onBlurFio = () => {
-  if ( Array.from(fio.split(' ')).length >= 3 ) {
-    let finiArr = fio.split(' ')
-    setFini(finiArr[0] + ' ' + Array.from(finiArr[1])[0] + '. ' + Array.from(finiArr[2])[0] + '.')
+  const onChangePred = (text) => {
+    setPred(text);
   }
-}
+  const onChangeSrok = (text) => {
+    setSrok(text);
+  }
 
 
+  let date = moment().format("DD") + '.' + moment().format("MM") + '.' + moment().format("YYYY") + 'г.'
+  let nomer = moment().format("DMM") + '_' + moment().format("HHmm")
+  const onBlurFio = () => {
+    if (Array.from(fio.split(' ')).length >= 3) {
+      let finiArr = fio.split(' ')
+      setFini(finiArr[0] + ' ' + Array.from(finiArr[1])[0] + '. ' + Array.from(finiArr[2])[0] + '.')
+    } else {
+      setFini('______________________________')
+    }
+  }
+
+  const predoplata = pred + ' руб. 00 коп. (' + convertNumberToWordsRu(pred) + ')'
+
+  const summa = sum + ' руб. 00 коп. (' + convertNumberToWordsRu(sum) + ').'
+
+  const pechatObj = <Otpr />
+  const pechat = `<img src="data:image/png;base64,${pechatObj.type}" style="width: 20vw; position:relative; top:50px; left:-10px;" />`
+  const podpisObj = <Podpis />
+  const podpis = `<img src="data:image/png;base64,${podpisObj.type}" style="width: 20vw; position:relative; top:50px; left:-80px;" />`
 
   const dogovorObj = <DogovorRyba />
   let dogovorPlus = dogovorObj.type
@@ -49,6 +72,11 @@ const onBlurFio = () => {
   dogovorPlus = dogovorPlus.replace(/tel/g, tel)
   dogovorPlus = dogovorPlus.replace(/adres/g, adres)
   dogovorPlus = dogovorPlus.replace(/dannye/g, dannye)
+  dogovorPlus = dogovorPlus.replace(/predoplata/g, predoplata)
+  dogovorPlus = dogovorPlus.replace(/summa/g, summa)
+  dogovorPlus = dogovorPlus.replace(/srok/g, srok)
+  dogovorPlus = dogovorPlus.replace(/pechat/g, pechat)
+  dogovorPlus = dogovorPlus.replace(/podpis/g, podpis)
 
   return (
     <View style={styles.centeredView}>
@@ -91,6 +119,21 @@ const onBlurFio = () => {
               maxLength={60}
               placeholder='Данные'
               onChangeText={onChangeDan}
+              multiline={true}
+            />
+            <TextInput
+              style={styles.input}
+              maxLength={10}
+              placeholder='Предоплата'
+              keyboardType='numeric'
+              autoComplete='cc-number'
+              onChangeText={onChangePred}
+            />
+            <TextInput
+              style={styles.input}
+              maxLength={10}
+              placeholder='10-ти'
+              onChangeText={onChangeSrok}
               multiline={true}
             />
             <PrintExpo html={dogovorPlus} txt={'Договор'} />
